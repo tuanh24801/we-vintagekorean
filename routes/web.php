@@ -31,9 +31,11 @@ Route::prefix('we-admin')->middleware(['auth', 'isAdmin'])->name('admin.')->grou
         return view('admin.dashboard');
     });
 
+    Route::get('/accounts-lw', App\Http\Livewire\Admin\Account\Index::class, 'index');
     // Account controller
     Route::controller(App\Http\Controllers\Admin\AccountController::class)->group( function(){
         Route::get('/accounts', 'index');
+
         Route::get('/accounts/create', 'create');
         Route::post('/accounts', 'store');
         Route::get('/accounts/{user_id}', 'update');

@@ -11,7 +11,7 @@ class AccountController extends Controller
 {
     public function index(){
         $users = User::all();
-        return view('admin.accounts.index', compact('users'));
+        return view('admin.accounts.index-lw', compact('users'));
     }
 
     public function create(){
