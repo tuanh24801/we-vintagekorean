@@ -39,8 +39,8 @@
         </a>
         <div class="collapse" id="product">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="#"> Thêm sản phẩm </a></li>
-            <li class="nav-item"> <a class="nav-link" href="#"> Danh sách sản phẩm </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/products') }}"> Thêm sản phẩm </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/products') }}"> Danh sách sản phẩm </a></li>
           </ul>
         </div>
       </li>

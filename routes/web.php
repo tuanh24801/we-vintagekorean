@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return '<h1>Đây là trang người dùng</h1>';
+    return view('clients.home.index');
 });
 
 
@@ -23,8 +23,6 @@ Route::prefix('we-admin')->group(function () {
     Auth::routes();
 });
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::redirect('/home','/');
 
 Route::prefix('we-admin')->middleware(['auth', 'isAdmin'])->name('admin.')->group(function (){
     Route::get('dashboard', function () {

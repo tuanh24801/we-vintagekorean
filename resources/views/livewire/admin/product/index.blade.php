@@ -1,76 +1,6 @@
 <div class="row">
-    <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="storeProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm tài khoản</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form wire:submit.prevent="storeProduct">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="">Tên tài khoản</label>
-                            <input type="text" wire:model.defer="name" class="form-control">
-                            @error('name')
-                                <span class="error text-sm text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="">Email</label>
-                            <input type="text" wire:model.defer="email" class="form-control">
-                            @error('email')
-                                <span class="error text-sm text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="">Mật khẩu</label>
-                            <input type="password" wire:model.defer="password" class="form-control">
-                            @error('password')
-                                <span class="error text-sm text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="">Quyền</label>
-                            <select wire:model.defer="role_as" class="form-control">
-                                <option value="1">Admin</option>
-                                <option value="0">Người dùng</option>
-                            </select>
-                            @error('role_as')
-                                <span class="error text-sm text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div wire:ignore.self class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông báo</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form wire:submit.prevent="deleteAccount">
-                    <div class="modal-body">
-                        <label for="">Bạn có muốn xóa tài khoản này ? </label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('livewire.admin.product.modal-form')
+    {{-- table --}}
     <div class="col-md-12">
         <div class="card">
             @if (session('message'))
@@ -80,26 +10,60 @@
                 <h4>
                     Danh sách sản phẩm
                     <button class="btn btn-sm btn-primary float-end text-white" data-bs-toggle="modal"
-                        data-bs-target="#storeProductModal">
+                        data-bs-target="#storeProductModal" wire:click = "resetInput">
                         Thêm sản phẩm
                     </button>
                 </h4>
             </div>
+            <style>
+                .table td img {
+                    width: 180px;
+                    height: auto;
+                    border-radius: 0%;
+                }
+            </style>
             <div class="card-body">
                 <table class="table table-striped table-bodered">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Tên tài khoản</th>
-                            <th>Email</th>
-                            <th>Quyền truy cập</th>
-                            <th>Xóa tài khoản</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá bán</th>
+                            <th>Trạng thái</th>
+                            <th>Ảnh</th>
+                            <th>Chỉnh sửa</th>
+                            <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products = [] as $product)
+                        @forelse ($products as $product)
                             <tr>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>
+                                    @if ($product->selling_price != 0)
+                                        (<s>{{ $product->original_price }}đ</s>) <br><br> {{ $product->selling_price }}đ
+                                    @else
+                                        {{ $product->original_price }}đ
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($product->status == '0')
+                                        <button class="btn btn-success btn-sm text-white" wire:click="changeStatus({{ $product->id }})">Hiện bán</button><br>
+                                        <small>click để ẩn sản phẩm</small>
+                                    @else
+                                        <button class="btn btn-info btn-sm text-white" wire:click="changeStatus({{ $product->id }})" >Đã ẩn</button><br>
+                                        <small>click để mở bán sản phẩm</small>
 
+                                    @endif
+                                </td>
+                                <td>
+                                    <img src="{{ asset('storage/product_images/') }}/{{ $product->image }}" alt="{{ $product->slug }}" style="width: 80px;">
+                                </td>
+                                <td> <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#updateProductModal" wire:click="editProduct({{ $product->id  }})">Sửa</button> </td>
+                                <td> <button class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteProductModal" wire:click="deleteProduct({{ $product->id  }})">Xóa</button> </td>
                             </tr>
                         @empty
                             <tr>
@@ -120,8 +84,9 @@
     <script>
         window.addEventListener('close-modal', event => {
             $('#storeProductModal').modal('hide');
-            // $('#UpdateBrandModal').modal('hide');
             $('#deleteProductModal').modal('hide');
+            $('#updateProductModal').modal('hide');
+            $('#editImage').modal('hide');
         });
     </script>
 @endpush
