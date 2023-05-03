@@ -1,5 +1,5 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
+    <ul class="nav" >
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="mdi mdi-home menu-icon"></i>
@@ -13,7 +13,7 @@
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
+          <ul class="nav flex-column sub-menu" style="list-style:none;">
             <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/accounts/create') }}">Thêm tài khoản</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/accounts') }}">Danh sách tài khoản</a></li>
           </ul>

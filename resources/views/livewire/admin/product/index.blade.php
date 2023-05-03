@@ -1,6 +1,6 @@
 <div class="row">
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="storeUserModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div wire:ignore.self class="modal fade" id="storeProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -8,7 +8,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm tài khoản</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form wire:submit.prevent="storeAccount">
+                <form wire:submit.prevent="storeProduct">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="">Tên tài khoản</label>
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div wire:ignore.self class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div wire:ignore.self class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -78,10 +78,10 @@
             @endif
             <div class="card-header">
                 <h4>
-                    Danh sách tài khoản
+                    Danh sách sản phẩm
                     <button class="btn btn-sm btn-primary float-end text-white" data-bs-toggle="modal"
-                        data-bs-target="#storeUserModal">
-                        Thêm tài khoản
+                        data-bs-target="#storeProductModal">
+                        Thêm sản phẩm
                     </button>
                 </h4>
             </div>
@@ -97,19 +97,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($users as $user)
+                        @forelse ($products = [] as $product)
                             <tr>
-                                <th>{{ $user->id }}</th>
-                                <th>{{ $user->name }}</th>
-                                <th>{{ $user->email }}</th>
-                                <th>
-                                    <p>Quyền hiện tại: {{ $user->role_as == '1' ? 'Admin' : 'Người dùng' }} </p>
-                                    <button wire:click="changeRole({{ $user->id }})"
-                                        class="btn {{ $user->role_as == '1' ? 'btn-danger' : 'btn-primary' }} text-white ">
-                                        {{ $user->role_as == '1' ? 'Hạ quyền' : 'Cấp quyền Admin' }}</button>
-                                </th>
-                                <th><button wire:click="getIdDelete({{ $user->id }})" class="btn btn-danger text-white" data-bs-toggle="modal"
-                                    data-bs-target="#deleteUserModal">Xóa</button></th>
+
                             </tr>
                         @empty
                             <tr>
@@ -119,7 +109,7 @@
                     </tbody>
                 </table>
                 <div class="pagination">
-                    {{ $users->links() }}
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>
@@ -129,9 +119,9 @@
 @push('script')
     <script>
         window.addEventListener('close-modal', event => {
-            $('#storeUserModal').modal('hide');
+            $('#storeProductModal').modal('hide');
             // $('#UpdateBrandModal').modal('hide');
-            $('#deleteUserModal').modal('hide');
+            $('#deleteProductModal').modal('hide');
         });
     </script>
 @endpush

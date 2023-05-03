@@ -11,7 +11,7 @@ class Index extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $name,$email,$password,$role_as;
+    public $name,$email,$password,$role_as,$user_id;
 
     protected $rules = [
         'name' => 'required',
@@ -29,6 +29,7 @@ class Index extends Component
         $this->email = null;
         $this->password = null;
         $this->role_as = 1;
+        $this->user_id = null;
     }
 
     public function storeAccount(){
@@ -44,6 +45,18 @@ class Index extends Component
         $user->role_as = $this->role_as;
         $user->save();
         session()->flash('message','Thêm tài khoản thành công');
+        $this->dispatchBrowserEvent('close-modal');
+        $this->resetInput();
+    }
+
+    public function getIdDelete($user_id){
+        $this->user_id = $user_id;
+    }
+
+    public function deleteAccount(){
+        $user = User::findOrFail($this->user_id);
+        $user->delete();
+        session()->flash('message','Xóa người dùng thành công');
         $this->dispatchBrowserEvent('close-modal');
         $this->resetInput();
     }
