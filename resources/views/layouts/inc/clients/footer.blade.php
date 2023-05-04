@@ -2,8 +2,10 @@
     <div class = "container">
         <div class = "row text-white g-4">
             <div class = "col-md-6 col-lg-3">
-                <a class = "text-uppercase text-decoration-none brand text-white" href = "index.html">Attire</a>
-                <p class = "text-white mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum mollitia quisquam veniam odit cupiditate, ullam aut voluptas velit dolor ipsam?</p>
+                <a class = "text-uppercase text-decoration-none brand text-white" href = "index.html">Vintage korean</a>
+                <p class = "text-white mt-3">
+                    Vintage korean tổng kho đầm vin Nhật/Hàn
+                </p>
             </div>
 
             <div class = "col-md-6 col-lg-3">
@@ -33,13 +35,13 @@
             </div>
 
             <div class = "col-md-6 col-lg-3">
-                <h5 class = "fw-light mb-3">Contact Us</h5>
+                <h5 class = "fw-light mb-3">Liên hệ với chúng tôi</h5>
                 <div class = "d-flex justify-content-start align-items-start my-2 ">
                     <span class = "me-3">
                         <i class = "fas fa-map-marked-alt"></i>
                     </span>
                     <span class = "fw-light">
-                        Albert Street, New York, AS 756, United States of America
+                        Quảng Nguyên, Quảng Phú Cầu, Ứng Hòa, Hà Nội
                     </span>
                 </div>
                 <div class = "d-flex justify-content-start align-items-start my-2 ">
@@ -47,7 +49,7 @@
                         <i class = "fas fa-envelope"></i>
                     </span>
                     <span class = "fw-light">
-                        attire.support@gmail.com
+                        vintagekorean@gmail.com
                     </span>
                 </div>
                 <div class = "d-flex justify-content-start align-items-start my-2 ">
@@ -55,13 +57,13 @@
                         <i class = "fas fa-phone-alt"></i>
                     </span>
                     <span class = "fw-light">
-                        +9786 6776 236
+                        +84379452201
                     </span>
                 </div>
             </div>
 
             <div class = "col-md-6 col-lg-3">
-                <h5 class = "fw-light mb-3">Follow Us</h5>
+                <h5 class = "fw-light mb-3">Theo dõi chúng tôi</h5>
                 <div>
                     <ul class = "list-unstyled d-flex">
                         <li>

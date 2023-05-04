@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('clients.home.index');
-});
+Route::get('/', [App\Http\Controllers\Client\HomeController::class,'index'])->name('home');
 
 
 Route::prefix('we-admin')->group(function () {

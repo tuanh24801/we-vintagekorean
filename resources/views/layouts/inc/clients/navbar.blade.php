@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
     <div class="container">
-        <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="index.html">
+        <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="{{ route('home') }}">
             <img src="{{ asset('clients/images/logos/vintage-korean-logo-png.png') }}" alt="site icon">
             {{-- <span class="text-uppercase fw-lighter ms-2">Attire</span> --}}
         </a>
@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse order-lg-1" id="navMenu">
             <ul class="navbar-nav mx-auto text-center">
                 <li class="nav-item px-2 py-2">
-                    <a class="nav-link text-dark" href="#header">Trang chủ</a>
+                    <a class="nav-link text-dark" href="{{ route('home') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item px-2 py-2">
                     <a class="nav-link text-dark" href="#collection">Sản phẩm</a>
