@@ -9,10 +9,7 @@
             <div class="card-header">
                 <h4>
                     Danh sách sản phẩm
-                    <button class="btn btn-sm btn-primary float-end text-white" data-bs-toggle="modal"
-                        data-bs-target="#storeProductModal" wire:click = "resetInput">
-                        Thêm sản phẩm
-                    </button>
+                    <a href="{{ url('we-admin/products/create') }}" class="btn btn-sm btn-primary float-end text-white"> Thêm mới sản phẩm </a>
                 </h4>
             </div>
             <style>
@@ -60,8 +57,7 @@
                                 <td>
                                     <img src="{{ asset('storage/product_images/') }}/{{ $product->image }}" alt="{{ $product->slug }}" style="width: 80px;">
                                 </td>
-                                <td> <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#updateProductModal" wire:click="editProduct({{ $product->id  }})">Sửa</button> </td>
+                                <td> <a href="#"class="btn btn-primary">Sửa</a> </td>
                                 <td> <button class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteProductModal" wire:click="deleteProduct({{ $product->id  }})">Xóa</button> </td>
                             </tr>
@@ -83,10 +79,7 @@
 @push('script')
     <script>
         window.addEventListener('close-modal', event => {
-            $('#storeProductModal').modal('hide');
             $('#deleteProductModal').modal('hide');
-            $('#updateProductModal').modal('hide');
-            $('#editImage').modal('hide');
         });
     </script>
 @endpush

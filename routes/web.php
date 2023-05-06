@@ -30,15 +30,17 @@ Route::prefix('we-admin')->middleware(['auth', 'isAdmin'])->name('admin.')->grou
     // Account controller
     Route::controller(App\Http\Controllers\Admin\AccountController::class)->group( function(){
         Route::get('/accounts', 'index');
-        Route::get('/accounts/create', 'create');
-        Route::post('/accounts', 'store');
-        Route::get('/accounts/{user_id}', 'update');
-        Route::delete('/accounts/{user_id}/delete', 'destroy');
+    });
+
+    // Color Controller
+    Route::controller(App\Http\Controllers\Admin\ColorController::class)->group( function(){
+        Route::get('/colors', 'index');
     });
 
     // Product Controller
     Route::controller(App\Http\Controllers\Admin\ProductController::class)->group( function(){
         Route::get('/products', 'index');
+        Route::get('/products/create', 'create');
     });
 
 });

@@ -26,7 +26,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ url('we-admin/colors') }}">
           <i class="mdi mdi-chart-pie menu-icon"></i>
           <span class="menu-title">Màu sắc</span>
         </a>
