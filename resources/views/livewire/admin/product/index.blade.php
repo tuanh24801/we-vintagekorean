@@ -25,6 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
                             <th>Giá bán</th>
                             <th>Trạng thái</th>
                             <th>Ảnh</th>
@@ -37,6 +38,13 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>{{ $product->name }}</td>
+                                <td>
+                                    <ul>
+                                    @foreach ($product->colors as $productColor)
+                                        <li>{{ $productColor->name }}</li>
+                                    @endforeach
+                                    </ul>
+                                </td>
                                 <td>
                                     @if ($product->selling_price != 0)
                                         (<s>{{ $product->original_price }}đ</s>) <br><br> {{ $product->selling_price }}đ
@@ -55,9 +63,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="{{ asset('storage/product_images/') }}/{{ $product->image }}" alt="{{ $product->slug }}" style="width: 80px;">
+                                    @foreach ($product->images as $productImage)
+                                        <img src="{{ asset($productImage->image) }}" alt="" style="width: 100px;height:auto;">
+                                        {{-- {{ $productImage->image }} --}}
+                                    @endforeach
                                 </td>
-                                <td> <a href="#"class="btn btn-primary">Sửa</a> </td>
+                                <td> <a href="{{ url('we-admin/products/'.$product->id.'/edit') }}"class="btn btn-primary">Sửa</a> </td>
                                 <td> <button class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteProductModal" wire:click="deleteProduct({{ $product->id  }})">Xóa</button> </td>
                             </tr>

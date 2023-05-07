@@ -18,11 +18,13 @@
                 }
             </style>
             <div class = "collection-list mt-0 row gx-0 gy-3">
-
                 @forelse ($products as $product)
                     <div class = "col-md-6 col-lg-4 col-xl-3 p-2 best">
                         <div class = "collection-img position-relative">
-                            <img src = "{{ asset('storage/product_images') }}/{{ $product->image }}" class = "w-100" style="width: 80px; height: 470px;">
+                            @foreach ($product->images as $productImage)
+                                <img src = "{{ asset($productImage->image) }}" class = "w-100" style="width: 80px; height: 470px;">
+                            @endforeach
+
                             <span class = "position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
                         </div>
                         <div class = "mt-2">

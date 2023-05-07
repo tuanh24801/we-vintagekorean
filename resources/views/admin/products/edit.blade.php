@@ -14,7 +14,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="">Tên sản phẩm</label>
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                        <input type="text" class="form-control" name="name" value="{{ old('name') ? old('name') : $product->name }}">
                         @error('name')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror

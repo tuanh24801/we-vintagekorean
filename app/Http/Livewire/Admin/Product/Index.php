@@ -146,9 +146,14 @@ class Index extends Component
 
     public function destroyProduct(){
         $product = Product::findOrFail($this->product_id);
-        if (File::exists(public_path('storage\product_images\\').$product->image)) {
-            File::delete(public_path('storage\product_images\\').$product->image);
+        $product_images = $product->images;
+        foreach ($product_images as $product_image) {
+            if (File::exists(public_path($product_image->image))) {
+                File::delete(public_path($product_image->image));
+            }
         }
+
+
         $product->delete();
         session()->flash('message','Đã xóa sản phẩm');
         $this->dispatchBrowserEvent('close-modal');
@@ -166,7 +171,8 @@ class Index extends Component
 
     public function render()
     {
-        $products = Product::orderBy('id','DESC')->paginate(4);
+        $products = Product::orderBy('id','DESC')->paginate(7);
+
         return view('livewire.admin.product.index', compact('products'));
     }
 }

@@ -1,5 +1,5 @@
 <div class="row">
-    <!-- Modal -->
+    <!-- Modal Store-->
     <div wire:ignore.self class="modal fade" id="storeColorModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -33,7 +33,44 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal Edit-->
+    <div wire:ignore.self class="modal fade" id="editColorModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Sửa màu sắc</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div wire:loading>
+                    Updating Post...
+                </div>
+                <form wire:submit.prevent="updateColor" wire:loading.remove>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="">Tên màu</label>
+                            <input type="text" wire:model.defer="name" class="form-control">
+                            @error('name')
+                                <span class="error text-sm text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Mã màu</label>
+                            <input type="text" wire:model.defer="code" class="form-control">
+                            @error('code')
+                                <span class="error text-sm text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete-->
     <div wire:ignore.self class="modal fade" id="deleteColorModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -42,7 +79,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Thông báo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form wire:submit.prevent="deleteColor">
+                <form wire:submit.prevent="destoyColor">
                     <div class="modal-body">
                         <label for="">Bạn có muốn xóa mã màu này ? </label>
                     </div>
@@ -64,7 +101,7 @@
                 <h4>
                     Danh sách màu sắc
                     <button class="btn btn-sm btn-primary float-end text-white" data-bs-toggle="modal"
-                        data-bs-target="#storeColorModal">
+                        data-bs-target="#storeColorModal" wire:click="resetInput">
                         Thêm màu sắc
                     </button>
                 </h4>
@@ -88,15 +125,21 @@
                                 <th>{{ $color->code }}</th>
                                 <th>
                                     @if ($color->status == 0)
-                                        <button class="btn btn-info"><b>Hiện</b></button>
+                                        <button class="btn btn-info"
+                                            wire:click="toggleStatus({{ $color->id }})"><b>Hiện</b></button>
                                     @else
-                                        <button class="btn btn-danger"><b>Ẩn</b></button>
+                                        <button class="btn btn-danger"
+                                            wire:click="toggleStatus({{ $color->id }})"><b>Ẩn</b></button>
                                     @endif
                                 </th>
                                 <th>
-                                    <button class="btn btn-success text-white">Sửa</button>
-                                    <button class="btn btn-danger text-white">Xóa</button>
-                                </th>
+                                    <button class="btn btn-success text-white"
+                                        wire:click="editColor({{ $color->id }})" data-bs-toggle="modal"
+                                        data-bs-target="#editColorModal">Sửa</button>
+                                    <button class="btn btn-danger text-white"
+                                        wire:click="deleteColor({{ $color->id }})" data-bs-toggle="modal"
+                                            data-bs-target="#deleteColorModal">Xóa</button>
+                                    </th>
                             </tr>
 
                         @empty
@@ -118,7 +161,7 @@
     <script>
         window.addEventListener('close-modal', event => {
             $('#storeColorModal').modal('hide');
-            // $('#UpdateBrandModal').modal('hide');
+            $('#editColorModal').modal('hide');
             $('#deleteColorModal').modal('hide');
         });
     </script>

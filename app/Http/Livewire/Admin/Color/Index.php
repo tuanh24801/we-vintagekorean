@@ -36,7 +36,48 @@ class Index extends Component
         $color->name = $validateData['name'];
         $color->code = $validateData['code'];
         $color->save();
-        session()->flash('message','Thêm tài khoản thành công');
+        session()->flash('message','Thêm màu thành công');
+        $this->dispatchBrowserEvent('close-modal');
+        $this->resetInput();
+    }
+
+    public function toggleStatus(int $id_color){
+        $color = Color::findOrFail($id_color);
+        if($color->status == 1){
+            $color->status = 0;
+        }else{
+            $color->status = 1;
+        }
+        $color->update();
+        session()->flash('message','Sửa trạng thái màu sắc thành công');
+    }
+
+    public function editColor(int $id_color){
+        $this->color_id = $id_color;
+        $color = Color::findOrFail($this->color_id);
+        $this->name = $color->name;
+        $this->code = $color->code;
+    }
+
+    public function updateColor(){
+        $validateData = $this->validate();
+        $color = Color::findOrFail($this->color_id);
+        $color->name = $validateData['name'];
+        $color->code = $validateData['code'];
+        $color->update();
+        session()->flash('message','Sửa màu sắc thành công');
+        $this->dispatchBrowserEvent('close-modal');
+        $this->resetInput();
+    }
+
+    public function deleteColor(int $id_color){
+        $this->color_id = $id_color;
+    }
+
+    public function destoyColor(){
+        $color = Color::findOrFail($this->color_id);
+        $color->delete();
+        session()->flash('message','Xóa màu sắc thành công');
         $this->dispatchBrowserEvent('close-modal');
         $this->resetInput();
     }
