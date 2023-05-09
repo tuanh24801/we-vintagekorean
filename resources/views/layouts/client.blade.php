@@ -12,6 +12,7 @@
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- bootstrap css -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <!-- custom css -->
     <link rel="stylesheet" href="{{ asset('clients/css/main.css') }}">
@@ -25,9 +26,6 @@
     @yield('content')
 
     @include('layouts.inc.clients.footer')
-
-
-
 
     <!-- jquery -->
     <script src="{{ asset('clients/js/jquery-3.6.0.js') }}"></script>

@@ -12,23 +12,23 @@
                 <h5 class = "fw-light">Links</h5>
                 <ul class = "list-unstyled">
                     <li class = "my-3">
-                        <a href = "#" class = "text-white text-decoration-none ">
-                            <i class = "fas fa-chevron-right me-1"></i> Home
+                        <a href = "{{ url('/') }}" class = "text-white text-decoration-none ">
+                            <i class = "fas fa-chevron-right me-1"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class = "my-3">
+                        <a href = "{{ url('/products') }}" class = "text-white text-decoration-none ">
+                            <i class = "fas fa-chevron-right me-1"></i> Sản phẩm
                         </a>
                     </li>
                     <li class = "my-3">
                         <a href = "#" class = "text-white text-decoration-none ">
-                            <i class = "fas fa-chevron-right me-1"></i> Collection
+                            <i class = "fas fa-chevron-right me-1"></i> Cộng tác viên tiếp thị
                         </a>
                     </li>
                     <li class = "my-3">
                         <a href = "#" class = "text-white text-decoration-none ">
-                            <i class = "fas fa-chevron-right me-1"></i> Blogs
-                        </a>
-                    </li>
-                    <li class = "my-3">
-                        <a href = "#" class = "text-white text-decoration-none ">
-                            <i class = "fas fa-chevron-right me-1"></i> About Us
+                            <i class = "fas fa-chevron-right me-1"></i> Về chúng tôi
                         </a>
                     </li>
                 </ul>

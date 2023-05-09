@@ -14,7 +14,6 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu" style="list-style:none;">
-            <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/accounts/create') }}">Thêm tài khoản</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/accounts') }}">Danh sách tài khoản</a></li>
           </ul>
         </div>
@@ -39,19 +38,19 @@
         </a>
         <div class="collapse" id="product">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/products') }}"> Thêm sản phẩm </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/products/create') }}"> Thêm sản phẩm </a></li>
             <li class="nav-item"> <a class="nav-link" href="{{ url('we-admin/products') }}"> Danh sách sản phẩm </a></li>
           </ul>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pages/tables/basic-table.html">
+        <a class="nav-link" href="#">
           <i class="mdi mdi-grid-large menu-icon"></i>
           <span class="menu-title">Bài viết</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pages/tables/basic-table.html">
+        <a class="nav-link" href="#">
           <i class="mdi mdi-grid-large menu-icon"></i>
           <span class="menu-title">Quản lý thanh toán</span>
         </a>

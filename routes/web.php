@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [App\Http\Controllers\Client\HomeController::class,'index'])->name('home');
+Route::post('/', [App\Http\Controllers\Client\HomeController::class,'index']);
+Route::get('/products', [App\Http\Controllers\Client\ProductController::class,'index']);
+Route::post('/products/addCart/{product_id}', [App\Http\Controllers\Client\ProductController::class,'addCart']);
+Route::get('/products/destroyCart', [App\Http\Controllers\Client\ProductController::class,'destroyCart']);
+Route::get('/products/updateCart/{rowId}/{qty}', [App\Http\Controllers\Client\ProductController::class,'updateCart']);
+Route::get('/cart', [App\Http\Controllers\Client\CartController::class,'index']);
+Route::get('/cart/{rowId}', [App\Http\Controllers\Client\CartController::class,'deleteItem']);
 
 
 Route::prefix('we-admin')->group(function () {
@@ -43,6 +50,7 @@ Route::prefix('we-admin')->middleware(['auth', 'isAdmin'])->name('admin.')->grou
         Route::get('/products/create', 'create');
         Route::post('/products', 'store');
         Route::get('/products/{product}/edit', 'edit');
+        Route::patch('/products/{product}', 'update');
     });
 
 });

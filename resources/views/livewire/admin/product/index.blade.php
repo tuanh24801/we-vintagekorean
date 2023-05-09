@@ -11,6 +11,7 @@
                     Danh sách sản phẩm
                     <a href="{{ url('we-admin/products/create') }}" class="btn btn-sm btn-primary float-end text-white"> Thêm mới sản phẩm </a>
                 </h4>
+                <p>Lưu ý: Không nên xóa sản phẩm những sản phẩm hết hàng chỉ nên ẩn</p>
             </div>
             <style>
                 .table td img {

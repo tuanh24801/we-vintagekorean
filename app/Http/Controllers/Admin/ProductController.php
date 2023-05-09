@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Color;
 use App\Models\Product;
 use App\Http\Requests\ProductFormRequest;
+use App\Http\Requests\ProductFormUpdateRequest;
+use Illuminate\Support\Facades\File;
+
 class ProductController extends Controller
 {
     public function index(){
@@ -73,6 +76,56 @@ class ProductController extends Controller
         $colors = Color::all();
         return view('admin.products.edit', compact('product','colors'));
         // dd($product);
+    }
+
+    public function update(ProductFormUpdateRequest $request, Product $product){
+        $validateData = $request->validated();
+
+        if(isset($validateData['name'])){
+            $product->name = $validateData['name'];
+        }
+        if(isset($validateData['description'])){
+            $product->description = $validateData['description'];
+        }
+        if(isset($validateData['original_price'])){
+            $product->original_price = $validateData['original_price'];
+        }
+        if(isset($validateData['selling_price'])){
+            $product->selling_price = $validateData['selling_price'];
+        }
+        if($request->hasFile('image')){
+            foreach ($product->images as $product_image) {
+                if (File::exists(public_path($product_image->image))) {
+                    File::delete(public_path($product_image->image));
+                }
+                $product_image->delete();
+            }
+            $file = $request->file('image');
+            $uploadPath = 'storage/product_images/';
+            $extention = $file->getClientOriginalExtension();
+            $fileName = time().'.'.$extention;
+            $file->move($uploadPath, $fileName);
+            $finalImagePathName = $uploadPath.$fileName;
+            $product->images()->create([
+                'product_id' => $product->id,
+                'image' => $finalImagePathName,
+            ]);
+        }
+        if(isset($request->colors)){
+            if(!empty($request->colors)){
+                foreach ($product->productColors as $productColors) {
+                    $productColors->delete();
+                }
+                foreach ($request->colors as $key => $color) {
+                    $product->productColors()->create([
+                        'product_id' => $product->id,
+                        'color_id' => $key
+                    ]);
+                }
+            }
+        }
+        $product->update();
+        return redirect('we-admin/products')->with('message', 'Sửa sản phẩm thành công');
     }
 
 }

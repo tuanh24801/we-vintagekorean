@@ -153,7 +153,6 @@ class Index extends Component
             }
         }
 
-
         $product->delete();
         session()->flash('message','Đã xóa sản phẩm');
         $this->dispatchBrowserEvent('close-modal');
@@ -171,7 +170,7 @@ class Index extends Component
 
     public function render()
     {
-        $products = Product::orderBy('id','DESC')->paginate(7);
+        $products = Product::orderBy('id','DESC')->paginate(5);
 
         return view('livewire.admin.product.index', compact('products'));
     }
