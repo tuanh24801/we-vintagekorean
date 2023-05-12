@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
     <div class="container">
         <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="{{ route('home') }}">
@@ -7,54 +6,62 @@
         </a>
 
         <div class="order-lg-2 nav-btns">
-            <button type="button" class="btn position-relative cart opencart_">
-                <i class="fa fa-shopping-cart"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge bg-primary">{{ Cart::count(); }}</span>
+            <button type="button" class="position-relative cart" style="border:none;">
+                <i class="fa fa-shopping-cart" wire:click="clickCart" style="padding: 7px;"></i>
+                <span
+                    class="position-absolute top-0 start-100 translate-middle badge bg-primary">{{ Cart::count() }}</span>
                 {{-- cart --}}
-                <div class="header__cart-wrap" id="header__cart-wrap">
-                    <div class="header__cart-list" id="header__cart-list">
+                <div class="header__cart-wrap" id="header__cart-wrap" style="display: {{ $display }};">
+                    <div class="header__cart-list" id="header__cart-list" style="display: {{ $display }};">
                         <!-- Has cart -->
                         <p class="header__cart-heading">
                             Sản phẩm đã thêm
-                            <a href="{{ url('products/destroyCart') }}" class="float-end destroyCart_" style="font-size: 12px; margin-right: 20px;">Xóa giỏ hàng</a>
+                            <a class="float-end destroyCart_" style="font-size: 12px; margin-right: 20px;"
+                                wire:click="destroyCart">Xóa giỏ
+                                hàng</a>
                         </p>
-
-                        <ul class="header__cart-list-item">
+                        <ul class="header__cart-list-item" id="list_item_cart">
+                            <div class="float-start" style="margin-left: 10px; margin-top:5px;">Tổng tiền: <b>{{ Cart::total(0, '', ',') }}₫</b></div><br><hr>
                             @forelse ($allCart as $cartItem)
-                            {{-- <hr class="hr_cart"> --}}
+                                {{-- <hr class="hr_cart"> --}}
                                 <li class="header__cart-item">
-                                    <img src="{{ asset($cartItem->options->image) }}"
-                                        alt="anh san pham" class="header__cart-item-img" />
+                                    <img src="{{ asset($cartItem->options->image) }}" alt="anh san pham"
+                                        class="header__cart-item-img" />
                                     <div class="header__cart-item-info">
                                         <div class="header__cart-item-head">
                                             <h5 class="header__cart-item-name">
                                                 {{ $cartItem->name }}
                                             </h5>
                                             <div class="header__cart-item-price-wrap">
-                                                <span class="header__cart-item-price"> {{ number_format($cartItem->price, 0, '', ',') }}₫</span>
+                                                <span class="header__cart-item-price">
+                                                    {{ number_format($cartItem->price, 0, '', ',') }}₫</span>
                                             </div>
                                         </div>
-                                        <div class="header__cart-item-body">
+                                        <div class="header__cart-item-body action_">
                                             <span class="header__cart-item-desc"><small>Đầm vin 2023</small></span>
                                             <div class="header__cart-item-remove">
                                                 @php
-                                                    $add = $cartItem->qty + 1;
-                                                    $remove = $cartItem->qty - 1;
+                                                    $rowId = $cartItem->name;
                                                 @endphp
-                                                <a class="header__cart-item-increment" href="{{ url('products/updateCart/'.$cartItem->rowId.'/'.$add) }}">+</a>
+                                                <input type="hidden" class="rowId" value="{{ $cartItem->rowId }}">
+                                                <input type="hidden" class="qty" value="{{ $cartItem->qty }}">
+                                                <a class="header__cart-item-increment increaseItem"
+                                                    wire:click="openCart">+</a>
                                                 <span class="header__cart-item-qnt">{{ $cartItem->qty }}</span>
-                                                <a class="header__cart-item-uncrement" href="{{ url('products/updateCart/'.$cartItem->rowId.'/'.$remove) }}">-</a>
+                                                <a class="header__cart-item-uncrement uncreaseItem"
+                                                    wire:click="openCart">-</a>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                                 <hr>
-                                @empty
-                                    <p class="p-5">Giỏ hàng trống</p>
-                                @endforelse
-                                <div class="float-end">Tổng tiền: {{ Cart::total(0, '', ','); }}₫</div>
+                            @empty
+                                <p class="p-5">Giỏ hàng trống</p>
+                            @endforelse
+
                         </ul>
-                        <a class="header__cart-view btn btn-sm btn-primary closecart_">Đóng</a>
+                        {{-- {{ $name }} --}}
+                        <a class="header__cart-view btn btn-sm btn-primary closecart_" wire:click="closeCart">Đóng</a>
                         <a href="{{ url('cart') }}" class="header__cart-view btn btn-sm btn-primary">Thanh toán</a>
                     </div>
                 </div>
@@ -68,6 +75,7 @@
                 <i class="fa fa-search"></i>
             </button>
         </div>
+
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
@@ -103,20 +111,45 @@
 
 @push('scripts')
     <script>
-        var toggleCart = false;
-        $('.opencart_').click(function(){
-            // toggleCart = !toggleCart;
-            setTimeout(() => {
-                $('.header__cart-wrap').css('display','block');
-                $('.header__cart-list').css('display','block');
-            }, 30);
-            // alert('Close');
-        });
-        $('.closecart_').click(function(){
-           setTimeout(() => {
-            $('.header__cart-wrap', window.parent.document).css('display','none');
-            $('.header__cart-list', window.parent.document).css('display','none');
-           }, 100);
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('click', '.increaseItem', function() {
+                let rowId = $(this).closest('.action_').find('.rowId').val();
+                let qty = $(this).closest('.action_').find('.qty').val();
+                let data = {
+                    'rowId': rowId,
+                    'qty': qty++,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/products/updateCart/" + rowId + "/" + qty,
+                    data: data,
+                    success: function(response) {
+                        // thành công
+                    }
+                });
+            });
+
+            $(document).on('click', '.uncreaseItem', function() {
+                let rowId = $(this).closest('.action_').find('.rowId').val();
+                let qty = $(this).closest('.action_').find('.qty').val();
+                let data = {
+                    'rowId': rowId,
+                    'qty': qty--,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/products/updateCart/" + rowId + "/" + qty,
+                    data: data,
+                    success: function(response) {
+                        // thành công
+                    }
+                });
+            });
         });
     </script>
 @endpush

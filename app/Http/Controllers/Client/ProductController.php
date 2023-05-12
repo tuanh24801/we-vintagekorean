@@ -23,7 +23,11 @@ class ProductController extends Controller
             Cart::add(['id' => $product->id, 'name' => $product->name, 'qty' => 1, 'price' => $product->selling_price, 'weight' => 0, 'options' => ['image' => $productImage->image]]);
         }
 
-        return response()->json(['message' => 'Đã thêm sản phẩm vào giỏ hàng']);
+        return response()
+        ->json([
+            'message' => 'Đã thêm sản phẩm vào giỏ hàng',
+            'allCart' => Cart::content()
+        ]);
         // dd();
     }
 
@@ -34,8 +38,14 @@ class ProductController extends Controller
     }
 
     public function updateCart( $rowId,  $qty){
-        // dd($rowId, $qty);
+
         Cart::update($rowId, $qty);
-        return redirect()->back();
+
+        // return response()
+        // ->json([
+        //     'message' => 'Đã thêm sản phẩm vào giỏ hàng',
+        //     'allCart' => Cart::content(),
+        //     'id' => Cart::get($rowId)->id
+        // ]);
     }
 }

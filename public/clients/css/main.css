@@ -272,14 +272,14 @@ footer a:hover{
 }
 
 .header__cart-list::after {
-    content: "";
+    /* content: "";
     position: absolute;
     right: 0px;
     top: -26px;
     border-width: 15px 14px;
     border-style: solid;
     border-color: transparent transparent #fff transparent;
-    cursor: pointer;
+    cursor: pointer; */
 }
 
 .header__cart-item {

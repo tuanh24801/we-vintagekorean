@@ -18,13 +18,13 @@
     <link rel="stylesheet" href="{{ asset('clients/css/main.css') }}">
     {{-- icon --}}
     <link rel="shortcut icon" href="{{ asset('clients/images/logos/icon-ko.png') }}" />
+    @livewireStyles
 </head>
 
 <body>
-    @include('layouts.inc.clients.navbar')
-    <div style = "margin-top: 80px;"></div>
-    @yield('content')
 
+    @yield('content')
+    {{-- @livewire('client.layout.main') --}}
     @include('layouts.inc.clients.footer')
 
     <!-- jquery -->
@@ -35,6 +35,8 @@
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <!-- custom js -->
     <script src="{{ asset('clients/js/script.js') }}"></script>
+    {{-- @yield('scripts') --}}
+    @livewireScripts
     @stack('scripts')
 </body>
 

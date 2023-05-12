@@ -1,7 +1,7 @@
 <section id = "blogs" class = "py-5">
     <div class = "container">
         <div class = "title text-center py-5">
-            <h2 class = "position-relative d-inline-block">Our Latest Blog</h2>
+            <h2 class = "position-relative d-inline-block">Bài viết của chúng tôi</h2>
         </div>
 
         <div class = "row g-3">
